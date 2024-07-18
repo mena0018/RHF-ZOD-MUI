@@ -1,3 +1,5 @@
+import { UsersProvider } from '@/features/users/components/UsersProvider';
+
 export function App() {
-  return <div>Hello</div>;
+  return <UsersProvider />;
 }
