@@ -15,7 +15,7 @@ export const RHFAutocomplete = <T extends FieldValues>({
   label,
   options,
 }: Props<T>) => {
-  const { control } = useFormContext();
+  const { control } = useFormContext<T>();
 
   return (
     <Controller

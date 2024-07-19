@@ -9,7 +9,7 @@ import {
 export function useUsersForm() {
   const methods = useForm<UsersFields>({
     resolver: zodResolver(UsersSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: userDefaultValues,
   });
 
