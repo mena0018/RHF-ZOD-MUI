@@ -1,6 +1,7 @@
 import { Container, Stack } from '@mui/material';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { UsersFields } from '@/features/users/types/schema';
+import { RHFCheckbox } from '@/components/RHFCheckbox';
 import { RHFTextField } from '@/components/RHFTextField';
 import { RHFRadioGroup } from '@/components/RHFRadioGroup';
 import { RHFAutocomplete } from '@/components/RHFAutocomplete';
@@ -9,12 +10,14 @@ import {
   useStates,
   useGenders,
   useLanguages,
+  useSkills,
 } from '@/features/users/services/queries';
 
 export const UsersForm = () => {
   const { data: states } = useStates();
   const { data: genders } = useGenders();
   const { data: languages } = useLanguages();
+  const { data: skills } = useSkills();
 
   const { handleSubmit } = useFormContext<UsersFields>();
   const onSubmit: SubmitHandler<UsersFields> = (data) => console.log(data);
@@ -42,6 +45,11 @@ export const UsersForm = () => {
           name='gender'
           label='Gender'
           options={genders}
+        />
+        <RHFCheckbox<UsersFields>
+          name='skills'
+          label='Skills'
+          options={skills}
         />
       </Stack>
     </Container>
