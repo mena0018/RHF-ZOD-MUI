@@ -5,6 +5,7 @@ export const UsersSchema = z.object({
   email: z.string().email({ message: 'Email is invalid' }),
   states: z.array(z.string()).min(1).max(2),
   languagesSpoken: z.array(z.string()),
+  gender: z.string().min(1),
 });
 
 export type UsersFields = z.infer<typeof UsersSchema>;
@@ -14,4 +15,5 @@ export const userDefaultValues: UsersFields = {
   email: '',
   states: [],
   languagesSpoken: [],
+  gender: '',
 };
