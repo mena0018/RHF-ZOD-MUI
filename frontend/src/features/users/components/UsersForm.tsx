@@ -3,8 +3,13 @@ import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { UsersFields } from '@/features/users/types/schema';
 import { RHFTextField } from '@/components/RHFTextField';
 import { RHFAutocomplete } from '@/components/RHFAutocomplete';
+import { RHFToggleButtonGroup } from '@/components/RHFToggleButtonGroup';
+import { useStates, useLanguages } from '@/features/users/services/queries';
 
 export const UsersForm = () => {
+  const { data: states } = useStates();
+  const { data: languages } = useLanguages();
+
   const { handleSubmit } = useFormContext<UsersFields>();
   const onSubmit: SubmitHandler<UsersFields> = (data) => console.log(data);
 
@@ -21,10 +26,11 @@ export const UsersForm = () => {
         <RHFAutocomplete<UsersFields>
           name='states'
           label='States'
-          options={[
-            { id: '1', label: 'Alabama' },
-            { id: '2', label: 'Alaska' },
-          ]}
+          options={states}
+        />
+        <RHFToggleButtonGroup<UsersFields>
+          name='languagesSpoken'
+          options={languages}
         />
       </Stack>
     </Container>
