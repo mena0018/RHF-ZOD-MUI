@@ -1,6 +1,7 @@
-import { Container, Stack, Typography } from '@mui/material';
-import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { Container } from '@mui/material';
 import { UsersFields } from '@/features/users/types/schema';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { RHFSlider } from '@/components/RHFSlider';
 import { RHFCheckbox } from '@/components/RHFCheckbox';
 import { RHFTextField } from '@/components/RHFTextField';
 import { RHFRadioGroup } from '@/components/RHFRadioGroup';
@@ -52,11 +53,11 @@ export const UsersForm = () => {
         name='registrationDateAndTime'
         label='Registration Date and Time'
       />
-
-      <Stack gap={2}>
-        <Typography>Former Employment Period</Typography>
-        <RHFDateRangePicker<UsersFields> name='formerEmploymentPeriod' />
-      </Stack>
+      <RHFDateRangePicker<UsersFields>
+        name='formerEmploymentPeriod'
+        label='Former Employment Period'
+      />
+      <RHFSlider<UsersFields> name='salaryRange' label='Salary Range' />
     </Container>
   );
 };
