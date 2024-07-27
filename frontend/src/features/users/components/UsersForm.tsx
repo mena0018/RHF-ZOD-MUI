@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import { UsersFields } from '@/features/users/types/schema';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { StudentsForm } from '@/features/users/components/StudentsForm';
 import { RHFSlider } from '@/components/RHFSlider';
 import { RHFSwitch } from '@/components/RHFSwitch';
 import { RHFCheckbox } from '@/components/RHFCheckbox';
@@ -12,16 +13,16 @@ import { RHFDateRangePicker } from '@/components/RHFDateRangePicker';
 import { RHFToggleButtonGroup } from '@/components/RHFToggleButtonGroup';
 import {
   useStates,
+  useSkills,
   useGenders,
   useLanguages,
-  useSkills,
 } from '@/features/users/services/queries';
 
 export const UsersForm = () => {
   const { data: states } = useStates();
+  const { data: skills } = useSkills();
   const { data: genders } = useGenders();
   const { data: languages } = useLanguages();
-  const { data: skills } = useSkills();
 
   const { handleSubmit } = useFormContext<UsersFields>();
   const onSubmit: SubmitHandler<UsersFields> = (data) => console.log(data);
@@ -60,6 +61,8 @@ export const UsersForm = () => {
       />
       <RHFSlider<UsersFields> name='salaryRange' label='Salary Range' />
       <RHFSwitch<UsersFields> name='isTeacher' label='Are you a teacher ?' />
+
+      <StudentsForm />
     </Container>
   );
 };
