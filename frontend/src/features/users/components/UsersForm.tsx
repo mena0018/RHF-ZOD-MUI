@@ -2,6 +2,7 @@ import { Container } from '@mui/material';
 import { UsersFields } from '@/features/users/types/schema';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { RHFSlider } from '@/components/RHFSlider';
+import { RHFSwitch } from '@/components/RHFSwitch';
 import { RHFCheckbox } from '@/components/RHFCheckbox';
 import { RHFTextField } from '@/components/RHFTextField';
 import { RHFRadioGroup } from '@/components/RHFRadioGroup';
@@ -58,6 +59,7 @@ export const UsersForm = () => {
         label='Former Employment Period'
       />
       <RHFSlider<UsersFields> name='salaryRange' label='Salary Range' />
+      <RHFSwitch<UsersFields> name='isTeacher' label='Are you a teacher ?' />
     </Container>
   );
 };
