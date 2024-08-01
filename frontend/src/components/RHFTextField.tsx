@@ -3,7 +3,7 @@ import { Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
-} & Pick<TextFieldProps, 'label'>;
+} & Pick<TextFieldProps, 'label' | 'fullWidth'>;
 
 export const RHFTextField = <T extends FieldValues>({
   name,

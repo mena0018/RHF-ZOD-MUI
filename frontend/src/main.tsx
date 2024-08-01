@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import theme from '@/styles/theme.tsx';
 import { App } from './App.tsx';
+import { Toaster } from 'sonner';
 import { fr } from 'date-fns/locale';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <Toaster richColors position='top-right' />
           <App />
         </ThemeProvider>
       </LocalizationProvider>
