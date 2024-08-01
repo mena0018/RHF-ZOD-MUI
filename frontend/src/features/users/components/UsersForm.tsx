@@ -1,68 +1,48 @@
-import { Container } from '@mui/material';
-import { UsersFields } from '@/features/users/types/schema';
-import { SubmitHandler, useFormContext } from 'react-hook-form';
-import { StudentsForm } from '@/features/users/components/StudentsForm';
-import { RHFSlider } from '@/components/RHFSlider';
-import { RHFSwitch } from '@/components/RHFSwitch';
-import { RHFCheckbox } from '@/components/RHFCheckbox';
-import { RHFTextField } from '@/components/RHFTextField';
-import { RHFRadioGroup } from '@/components/RHFRadioGroup';
-import { RHFAutocomplete } from '@/components/RHFAutocomplete';
-import { RHFDateTimePicker } from '@/components/RHFDateTimePicker';
-import { RHFDateRangePicker } from '@/components/RHFDateRangePicker';
-import { RHFToggleButtonGroup } from '@/components/RHFToggleButtonGroup';
+import { Button, Container, Stack } from '@mui/material';
+import { FieldsForm } from '@/features/users/components/form/FieldsForm';
+import { SubmitHandler, useFormContext, useWatch } from 'react-hook-form';
+import { StudentsForm } from '@/features/users/components/form/StudentsForm';
+import { ListUsersForm } from '@/features/users/components/form/ListUsersForm';
+import { userDefaultValues, UsersFields } from '@/features/users/types/schema';
 import {
-  useStates,
-  useSkills,
-  useGenders,
-  useLanguages,
-} from '@/features/users/services/queries';
+  useEditUser,
+  useCreateUser,
+} from '@/features/users/services/mutations';
 
 export const UsersForm = () => {
-  const { data: states } = useStates();
-  const { data: skills } = useSkills();
-  const { data: genders } = useGenders();
-  const { data: languages } = useLanguages();
+  const { control, reset, handleSubmit } = useFormContext<UsersFields>();
+  const variant = useWatch({ control, name: 'variant' });
 
-  const { handleSubmit } = useFormContext<UsersFields>();
-  const onSubmit: SubmitHandler<UsersFields> = (data) => console.log(data);
+  const editUserMutation = useEditUser();
+  const createUserMutation = useCreateUser();
+
+  const onSubmit: SubmitHandler<UsersFields> = (data) => {
+    if (variant === 'create') {
+      createUserMutation.mutate(data);
+    } else {
+      editUserMutation.mutate(data);
+    }
+  };
 
   return (
     <Container
       maxWidth='sm'
       component='form'
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ padding: '2rem', gap: 3, display: 'flex', flexDirection: 'column' }}
+      sx={{ padding: '2rem', display: 'flex', gap: 2 }}
     >
-      <RHFTextField name='name' label='Name' />
-      <RHFTextField name='email' label='Email' />
-      <RHFAutocomplete<UsersFields>
-        name='states'
-        label='States'
-        options={states}
-      />
-      <RHFToggleButtonGroup<UsersFields>
-        name='languagesSpoken'
-        options={languages}
-      />
-      <RHFRadioGroup<UsersFields>
-        name='gender'
-        label='Gender'
-        options={genders}
-      />
-      <RHFCheckbox<UsersFields> name='skills' label='Skills' options={skills} />
-      <RHFDateTimePicker<UsersFields>
-        name='registrationDateAndTime'
-        label='Registration Date and Time'
-      />
-      <RHFDateRangePicker<UsersFields>
-        name='formerEmploymentPeriod'
-        label='Former Employment Period'
-      />
-      <RHFSlider<UsersFields> name='salaryRange' label='Salary Range' />
-      <RHFSwitch<UsersFields> name='isTeacher' label='Are you a teacher ?' />
+      <ListUsersForm />
 
-      <StudentsForm />
+      <Stack gap={3}>
+        <FieldsForm />
+        <StudentsForm />
+        <Stack flexDirection='row' gap={2} justifyContent='flex-end'>
+          <Button onClick={() => reset(userDefaultValues)}>Reset</Button>
+          <Button variant='contained' type='submit'>
+            {variant === 'create' ? 'Add user' : 'Edit user'}
+          </Button>
+        </Stack>
+      </Stack>
     </Container>
   );
 };
