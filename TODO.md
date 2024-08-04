@@ -4,4 +4,4 @@
 - Add tests
 - Add CI
 - Add linting
-- Deploy
+- Deploy ✅
